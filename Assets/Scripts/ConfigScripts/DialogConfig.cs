@@ -6,8 +6,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DialogConfig", menuName = "Configs/Dialog Config")]
 public class DialogConfig : ScriptableObject
 {
-    public int StartStep = 1;
-
     public NarratorConfig Teller;
     public List<DialogStep> DialogSteps = new List<DialogStep>();
 }
@@ -15,10 +13,11 @@ public class DialogConfig : ScriptableObject
 [Serializable]
 public class DialogStep
 {
-    public NarratorConfig Actor = null;
-    public NarratorMoods State = NarratorMoods.Default;
+    public bool IsTellerStep = false;
+    public NarratorConfig Actor = null; // of null => actor from prev step
     public NarratorAction Action = NarratorAction.Stand;
     public NarratorColorStates ColorState = NarratorColorStates.Default;
+    public NarratorMoods Mood = NarratorMoods.Same;
     public string Text;
 }
 

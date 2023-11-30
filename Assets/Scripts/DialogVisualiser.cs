@@ -9,15 +9,18 @@ using UnityEngine.UI;
 public class DialogVisualiser : MonoBehaviour
 {
     [SerializeField] private TMP_Text _textPlace;
-    [SerializeField, Range(0, 255)] private int _shadeForce;
+    [SerializeField] private TMP_Text _nameText;
+
+    [Header("Step action pararms")]
+    [SerializeField, Range(0, 255)] private int _shadeForce = 150;
     [SerializeField] private float _shadeSpeed = 2f;
     [SerializeField] private float _moveSpeed = 2f;
 
     [Header("PLaces")]
-    [SerializeField] private ActorParams _leftPlace;
-    [SerializeField] private ActorParams _rightPlace;
+    [SerializeField] private PlacePararms _leftPlace;
+    [SerializeField] private PlacePararms _rightPlace;
 
-    private Dictionary<NarratorPlaces, ActorParams> _actors;
+    private Dictionary<NarratorPlaces, PlacePararms> _actors = new();
 
     public void Init()
     {
@@ -25,47 +28,52 @@ public class DialogVisualiser : MonoBehaviour
         _actors.Add(NarratorPlaces.Right, _rightPlace);
     }
 
-    public void SetUpDialog(NarratorConfig leftActor, NarratorConfig rightActor, bool prevShowLeft = false, bool prevShowRight = false)
+    // initialize dialog
+    public void SetUpDialog()
     {
-        for (int i = 0; i < leftActor.moodPics.Count; i++)
-        {
-            _leftPlace.moodPics[i] = leftActor.moodPics[i];
-            _rightPlace.moodPics[i] = rightActor.moodPics[i];
-        }
-
-        ChangeMood(NarratorPlaces.Left, NarratorMoods.Default);
-        ChangeMood(NarratorPlaces.Right, NarratorMoods.Default);
-
         _leftPlace.DefaultPlace = _leftPlace.Image.rectTransform.position;
         _rightPlace.DefaultPlace = _rightPlace.Image.rectTransform.position;
-
-        ChangeActorLight(NarratorPlaces.Left, prevShowLeft == false ? 
-            NarratorColorStates.Transparent : NarratorColorStates.Shaded);
-
-        ChangeActorLight(NarratorPlaces.Right, prevShowLeft == false ?
-           NarratorColorStates.Transparent : NarratorColorStates.Shaded);
-
-        MoveActor(NarratorPlaces.Left, prevShowLeft == false ? NarratorAction.MoveOut : NarratorAction.MoveIn);
-        MoveActor(NarratorPlaces.Right, prevShowLeft == false ? NarratorAction.MoveOut : NarratorAction.MoveIn);
     }
 
-    private ActorParams GetActorByPlace(NarratorPlaces place)
+    // initialize actor
+    public void SetUpActor(NarratorConfig actor, NarratorPlaces narratorPlace, bool prevShow)
+    {
+        var tmp = GetActorByPlace(narratorPlace);
+        tmp.moodPics = actor.MoodPics;
+
+        ChangeMood(narratorPlace, NarratorMoods.Default);
+
+        ChangeActorLight(narratorPlace, prevShow == false ?
+            NarratorColorStates.Transparent : NarratorColorStates.Shaded);
+
+        ChangeActorAction(narratorPlace, prevShow == false ? NarratorAction.MoveOut : NarratorAction.MoveIn);
+    }
+
+    // set actor name and text
+    public void SetText(string text, string name)
+    {
+        _textPlace.text = text;
+        _nameText.text = name;
+    }
+
+    public PlacePararms GetActorByPlace(NarratorPlaces place)
     {
         return _actors[place];
     }
 
-    public void MoveActor(NarratorPlaces place, NarratorAction action)
+    // Move actor
+    public void ChangeActorAction(NarratorPlaces place, NarratorAction action)
     {
         var actor = GetActorByPlace(place);
 
         switch (action)
         {
             case NarratorAction.MoveIn:
-                actor.Image.rectTransform.DOMove(actor.DefaultPlace, _moveSpeed);
+                actor.Image.rectTransform.DOAnchorPos(actor.DefaultPlace, _moveSpeed);
                 break;
 
             case NarratorAction.MoveOut:
-                actor.Image.rectTransform.DOMove(actor.OutOfBoundsPlace, _moveSpeed);
+                actor.Image.rectTransform.DOAnchorPos(actor.OutOfBoundsPlace, _moveSpeed);
                 break;
 
             case NarratorAction.Stand:
@@ -73,6 +81,7 @@ public class DialogVisualiser : MonoBehaviour
         }
     }
 
+    // Change actor light (by default a talking = 255, a listener if not transpare = shade force)
     public void ChangeActorLight(NarratorPlaces place, NarratorColorStates state)
     {
         var actor = GetActorByPlace(place).Image;
@@ -96,6 +105,7 @@ public class DialogVisualiser : MonoBehaviour
         actor.DOColor(color, _shadeSpeed);
     }
 
+    // Change actor mood pics
     public void ChangeMood(NarratorPlaces place, NarratorMoods mood)
     {
         var actor = GetActorByPlace(place);
@@ -105,7 +115,7 @@ public class DialogVisualiser : MonoBehaviour
 }
 
 [Serializable]
-public class ActorParams
+public class PlacePararms
 {
     public Image Image;
 

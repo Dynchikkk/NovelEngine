@@ -7,7 +7,7 @@ using UnityEngine;
 public class NarratorConfig : ScriptableObject
 {
     public string NarratorName;
-    public List<NarratorState> moodPics = new(); 
+    public List<NarratorState> MoodPics = new(); 
 }
 
 [Serializable]
@@ -19,7 +19,8 @@ public class NarratorState
 
 public enum NarratorMoods
 {
-    Default = 0,
-    Angry = 1, 
-    Sad = 2
+    Same = 0,
+    Default = 1,
+    Angry = 2, 
+    Sad = 3
 }
