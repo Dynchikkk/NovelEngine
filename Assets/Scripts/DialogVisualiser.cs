@@ -8,8 +8,11 @@ using UnityEngine.UI;
 
 public class DialogVisualiser : MonoBehaviour
 {
+    public bool IsTyping { get; private set; } = false;
+
     [SerializeField] private TMP_Text _textPlace;
     [SerializeField] private TMP_Text _nameText;
+    [SerializeField, Range(0, 1)] private float _textWriteCD = 0.5f;
 
     [Header("Step action pararms")]
     [SerializeField, Range(0, 255)] private int _shadeForce = 150;
@@ -31,12 +34,14 @@ public class DialogVisualiser : MonoBehaviour
     // initialize dialog
     public void SetUpDialog()
     {
-        _leftPlace.DefaultPlace = _leftPlace.Image.rectTransform.position;
-        _rightPlace.DefaultPlace = _rightPlace.Image.rectTransform.position;
+        //_leftPlace.DefaultPlace = _leftPlace.Image.rectTransform.anchoredPosition;
+        //_rightPlace.DefaultPlace = _rightPlace.Image.rectTransform.anchoredPosition;
+
+        //_leftPlace.OutOfBoundsPlace = 
     }
 
     // initialize actor
-    public void SetUpActor(NarratorConfig actor, NarratorPlaces narratorPlace, bool prevShow)
+    public void SetUpActor(NarratorConfig actor, NarratorPlaces narratorPlace, bool prevShow = false)
     {
         var tmp = GetActorByPlace(narratorPlace);
         tmp.moodPics = actor.MoodPics;
@@ -52,8 +57,27 @@ public class DialogVisualiser : MonoBehaviour
     // set actor name and text
     public void SetText(string text, string name)
     {
-        _textPlace.text = text;
         _nameText.text = name;
+        StartCoroutine(WriteText(text));
+    }
+
+    public void ForceStopWriting() =>
+        IsTyping = false;
+
+    private IEnumerator WriteText(string text)
+    {
+        _textPlace.text = "";
+        IsTyping = true;
+        for (int i = 0; i < text.Length; i++)
+        {
+            _textPlace.text += text[i];
+            yield return new WaitForSeconds(_textWriteCD);
+            if (!IsTyping)
+                break;
+        }
+
+        _textPlace.text = text;
+        IsTyping = false;
     }
 
     public PlacePararms GetActorByPlace(NarratorPlaces place)
@@ -69,11 +93,11 @@ public class DialogVisualiser : MonoBehaviour
         switch (action)
         {
             case NarratorAction.MoveIn:
-                actor.Image.rectTransform.DOAnchorPos(actor.DefaultPlace, _moveSpeed);
+                actor.Image.rectTransform.DOAnchorPos(actor.DefaultPlace.anchoredPosition, _moveSpeed);
                 break;
 
             case NarratorAction.MoveOut:
-                actor.Image.rectTransform.DOAnchorPos(actor.OutOfBoundsPlace, _moveSpeed);
+                actor.Image.rectTransform.DOAnchorPos(actor.OutOfBoundsPlace.anchoredPosition, _moveSpeed);
                 break;
 
             case NarratorAction.Stand:
@@ -90,11 +114,11 @@ public class DialogVisualiser : MonoBehaviour
         switch (state)
         {
             case NarratorColorStates.Default:
-                color.a = 255;
+                color.a = 1;
                 break;
 
             case NarratorColorStates.Shaded:
-                color.a = _shadeForce;
+                color.a = (float)(_shadeForce / 255.0);
                 break;
 
             case NarratorColorStates.Transparent:
@@ -108,6 +132,9 @@ public class DialogVisualiser : MonoBehaviour
     // Change actor mood pics
     public void ChangeMood(NarratorPlaces place, NarratorMoods mood)
     {
+        if (mood == NarratorMoods.Same)
+            return;
+
         var actor = GetActorByPlace(place);
         var moodPic = actor.moodPics.Find(pic => pic.Mood == mood).Sprite;
         actor.Image.sprite = moodPic;
@@ -120,8 +147,8 @@ public class PlacePararms
     public Image Image;
 
     public List<NarratorState> moodPics;
-    public Vector3 OutOfBoundsPlace;
-    public Vector3 DefaultPlace;
+    public RectTransform DefaultPlace;
+    public RectTransform OutOfBoundsPlace;
 }
 
 public enum NarratorPlaces

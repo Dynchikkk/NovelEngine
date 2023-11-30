@@ -44,6 +44,13 @@ public class Dialog
 
     public void MakeStep()
     {
+        // if text is not fully write yet force write it
+        if(_visualiser.IsTyping)
+        {
+            _visualiser.ForceStopWriting();
+            return;
+        }
+
         var curStep = _config.DialogSteps[_currentStep];
 
         NarratorConfig curActor = curStep.IsTellerStep ? _config.Teller : curStep.Actor;
@@ -52,17 +59,20 @@ public class Dialog
         else
             _lastNarrator = curActor;
 
-        var actorPlace = _places[curActor];
-
         if (curStep.IsTellerStep)
         {
+            // shade both actor because of teller talk
             _visualiser.ChangeActorLight(NarratorPlaces.Left, NarratorColorStates.Shaded);
             _visualiser.ChangeActorLight(NarratorPlaces.Right, NarratorColorStates.Shaded);
         }
         else
         {
+            var actorPlace = _places[curActor];
+            // change transparency of current actor
             _visualiser.ChangeActorLight(actorPlace, curStep.ColorState);
-            if(curStep.ColorState == NarratorColorStates.Default)
+
+            // change transparency of second actor
+            if (curStep.ColorState == NarratorColorStates.Default)
             {
                 // if second acctor is not transparent make him shaded
                 var secondActorPlace = actorPlace == NarratorPlaces.Left ? NarratorPlaces.Right : NarratorPlaces.Left;
@@ -70,12 +80,16 @@ public class Dialog
                     _visualiser.ChangeActorLight(secondActorPlace, NarratorColorStates.Shaded);
             }
 
+            // set up other parametres of current actor
             _visualiser.ChangeActorAction(actorPlace, curStep.Action);
             _visualiser.ChangeMood(actorPlace, curStep.Mood);
         }
 
+        // type text
         _visualiser.SetText(curStep.Text, curActor.NarratorName);
 
         _currentStep++;
+        if (curStep.Text == "")
+            MakeStep();
     }
 }

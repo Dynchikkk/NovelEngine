@@ -18,17 +18,29 @@ MonoBehaviour:
     Actor: {fileID: 11400000, guid: 62ba8f2eb3f9bd34f84d2ecfb4281c37, type: 2}
     Action: 1
     ColorState: 0
+    Mood: 0
+    Text: 
+  - IsTellerStep: 1
+    Actor: {fileID: 0}
+    Action: 0
+    ColorState: 0
+    Mood: 0
+    Text: Teller textaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  - IsTellerStep: 0
+    Actor: {fileID: 11400000, guid: 62ba8f2eb3f9bd34f84d2ecfb4281c37, type: 2}
+    Action: 1
+    ColorState: 2
     Mood: 1
     Text: Hello
   - IsTellerStep: 0
-    Actor: {fileID: 11400000, guid: eaea73a019a585c449829df515597715, type: 2}
-    Action: 1
+    Actor: {fileID: 0}
+    Action: 0
     ColorState: 0
     Mood: 1
     Text: Hi
   - IsTellerStep: 0
-    Actor: {fileID: 11400000, guid: 62ba8f2eb3f9bd34f84d2ecfb4281c37, type: 2}
-    Action: 0
+    Actor: {fileID: 11400000, guid: eaea73a019a585c449829df515597715, type: 2}
+    Action: 1
     ColorState: 0
     Mood: 1
     Text: Fine and you
@@ -44,9 +56,3 @@ MonoBehaviour:
     ColorState: 0
     Mood: 3
     Text: See you
-  - IsTellerStep: 1
-    Actor: {fileID: 0}
-    Action: 0
-    ColorState: 0
-    Mood: 0
-    Text: Teller text
