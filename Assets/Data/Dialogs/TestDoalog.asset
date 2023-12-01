@@ -34,9 +34,15 @@ MonoBehaviour:
     Text: Hello
   - IsTellerStep: 0
     Actor: {fileID: 0}
-    Action: 0
+    Action: 3
     ColorState: 0
     Mood: 1
+    Text: Bye
+  - IsTellerStep: 0
+    Actor: {fileID: 11400000, guid: 1a6c2845c701dfe499bc53c627430fb9, type: 2}
+    Action: 1
+    ColorState: 0
+    Mood: 3
     Text: Hi
   - IsTellerStep: 0
     Actor: {fileID: 11400000, guid: eaea73a019a585c449829df515597715, type: 2}

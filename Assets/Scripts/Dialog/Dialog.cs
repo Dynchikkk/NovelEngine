@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Dialog
 {
+    public event Action OnDialogFinish;
+    public int CurrentStep => _currentStep;
+
     private DialogConfig _config;
     private DialogVisualiser _visualiser;
 
@@ -18,6 +21,7 @@ public class Dialog
     {
         _config = config;
         _visualiser = visualiser;
+        _visualiser.OnActorNeedToRemove += RemoveActor;
     }
 
     public void StartDialog(int step = 0)
@@ -33,19 +37,65 @@ public class Dialog
                 _actors.Add(item.Actor);
         }
 
-        _visualiser.SetUpActor(_actors[0], NarratorPlaces.Left, false);
-        _places.Add(_actors[0], NarratorPlaces.Left);
-
-        _visualiser.SetUpActor(_actors[1], NarratorPlaces.Right, false);
-        _places.Add(_actors[1], NarratorPlaces.Right);
-
         MakeStep();
+    }
+
+    private void SetUpActor(NarratorConfig act)
+    {
+        if (act == null)
+            return;
+
+        if (_places.ContainsKey(act))
+            return;
+
+        var tmpPlace = NarratorPlaces.Left;
+        foreach (var item in _places.Values)
+        {
+            if (tmpPlace == item)
+                tmpPlace += 1;
+        }
+
+        _places.Add(act, tmpPlace);
+        _visualiser.SetUpActor(act, tmpPlace);
+    }
+
+    private void RemoveActor(NarratorPlaces actorPlace)
+    {
+        foreach (var item in _places.Keys)
+        {
+            if (_places[item] == actorPlace)
+            {
+                _places.Remove(item);
+                _actors.Remove(item);
+                break;
+            }
+        }
+    }
+
+    private void ShadeListener(NarratorPlaces actorPlace)
+    {
+        foreach (NarratorPlaces place in Enum.GetValues(typeof(NarratorPlaces)))
+        {
+            if (place == actorPlace) continue;
+
+            var actByPlace = _visualiser.GetActorByPlace(place);
+            if (actByPlace == null) continue;
+            if (actByPlace.Image.color.a == 0) continue;
+
+            _visualiser.ChangeActorLight(place, NarratorColorStates.Shaded);
+        }
     }
 
     public void MakeStep()
     {
+        if (_currentStep >= _config.DialogSteps.Count)
+        {
+            OnDialogFinish?.Invoke();
+            return;
+        }
+
         // if text is not fully write yet force write it
-        if(_visualiser.IsTyping)
+        if (_visualiser.IsTyping)
         {
             _visualiser.ForceStopWriting();
             return;
@@ -67,18 +117,13 @@ public class Dialog
         }
         else
         {
+            SetUpActor(curActor);
             var actorPlace = _places[curActor];
             // change transparency of current actor
             _visualiser.ChangeActorLight(actorPlace, curStep.ColorState);
-
-            // change transparency of second actor
+            // change transparency of other actor
             if (curStep.ColorState == NarratorColorStates.Default)
-            {
-                // if second acctor is not transparent make him shaded
-                var secondActorPlace = actorPlace == NarratorPlaces.Left ? NarratorPlaces.Right : NarratorPlaces.Left;
-                if (_visualiser.GetActorByPlace(secondActorPlace).Image.color.a != 0)
-                    _visualiser.ChangeActorLight(secondActorPlace, NarratorColorStates.Shaded);
-            }
+                ShadeListener(actorPlace);
 
             // set up other parametres of current actor
             _visualiser.ChangeActorAction(actorPlace, curStep.Action);

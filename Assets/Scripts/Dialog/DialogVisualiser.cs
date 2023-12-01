@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class DialogVisualiser : MonoBehaviour
 {
+    public event Action<NarratorPlaces> OnActorNeedToRemove;
     public bool IsTyping { get; private set; } = false;
 
     [SerializeField] private TMP_Text _textPlace;
@@ -29,15 +30,25 @@ public class DialogVisualiser : MonoBehaviour
     {
         _actors.Add(NarratorPlaces.Left, _leftPlace);
         _actors.Add(NarratorPlaces.Right, _rightPlace);
+        ChangeVisualiserCondition(false);
     }
 
     // initialize dialog
     public void SetUpDialog()
     {
+        ChangeVisualiserCondition(true);
         //_leftPlace.DefaultPlace = _leftPlace.Image.rectTransform.anchoredPosition;
         //_rightPlace.DefaultPlace = _rightPlace.Image.rectTransform.anchoredPosition;
 
         //_leftPlace.OutOfBoundsPlace = 
+    }
+    
+    public void ChangeVisualiserCondition(bool condition)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(condition);
+        }
     }
 
     // initialize actor
@@ -98,6 +109,11 @@ public class DialogVisualiser : MonoBehaviour
 
             case NarratorAction.MoveOut:
                 actor.Image.rectTransform.DOAnchorPos(actor.OutOfBoundsPlace.anchoredPosition, _moveSpeed);
+                break;
+
+            case NarratorAction.Destroy:
+                actor.Image.rectTransform.DOAnchorPos(actor.OutOfBoundsPlace.anchoredPosition, _moveSpeed);
+                OnActorNeedToRemove?.Invoke(place);
                 break;
 
             case NarratorAction.Stand:

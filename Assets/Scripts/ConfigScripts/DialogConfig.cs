@@ -25,7 +25,8 @@ public enum NarratorAction
 {
     Stand = 0,
     MoveIn = 1,
-    MoveOut = 2
+    MoveOut = 2,
+    Destroy = 3 // remove actor from dialog
 }
 
 public enum NarratorColorStates
