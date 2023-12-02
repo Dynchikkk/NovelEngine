@@ -7,6 +7,11 @@ using UnityEngine;
 public class DialogConfig : ScriptableObject
 {
     public NarratorConfig Teller;
+
+    public string Name = "";
+    public string Author = "";
+    public string Description = "";
+    public Sprite Icon;
     public List<DialogStep> DialogSteps = new List<DialogStep>();
 }
 

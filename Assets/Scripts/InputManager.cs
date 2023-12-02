@@ -29,6 +29,6 @@ public class InputManager : MonoBehaviour
         if (!_dialogManager.IsInDialog)
             return;
 
-        _dialogManager.CurrentDialog.MakeStep();
+        _dialogManager.GetDialogByConfig(_dialogManager.CurrentDialog).MakeStep();
     }
 }

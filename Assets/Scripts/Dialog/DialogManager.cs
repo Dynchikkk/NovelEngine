@@ -1,36 +1,64 @@
+using Base;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogManager : MonoBehaviour
+public class DialogManager : Singleton<DialogManager>
 {
-    public Dialog CurrentDialog { get; private set; }
+    public event Action<DialogConfig> OnDialogPick;
+    public event Action OnDialogFinished;
+
+    public DialogConfig CurrentDialog { get; private set; }
     public bool IsInDialog { get; private set; }
 
     [SerializeField] private DialogVisualiser _visualizer;
-    [SerializeField] private DialogConfig _dialogConfigTest;
+    [SerializeField] private List<DialogConfig> _dialogConfigs;
 
-    private Dictionary<DialogConfig, Dialog> _dialogs = new();
+    private readonly Dictionary<DialogConfig, Dialog> _dialogs = new();
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         _visualizer.Init();
         _visualizer.ChangeVisualiserCondition(false);
+
+        foreach (DialogConfig config in _dialogConfigs)
+            _dialogs.Add(config, new Dialog(config, _visualizer));
     }
 
     public void PickDialog(DialogConfig dialogConfig)
     {
-        _dialogs.TryAdd(dialogConfig, new Dialog(dialogConfig, _visualizer));
         var dialog = _dialogs[dialogConfig];
-        CurrentDialog = dialog;
+        dialog.OnDialogFinish += DialogEnd;
+        CurrentDialog = dialogConfig;
 
-        dialog.StartDialog();
+        OnDialogPick?.Invoke(dialogConfig);
+
+        dialog.StartDialog(_dialogs[dialogConfig].CurrentStep);
         IsInDialog = true;
     }
 
-    [ContextMenu("Make step")]
-    public void Test()
+    public Dialog GetDialogByConfig(DialogConfig config)
     {
-        PickDialog(_dialogConfigTest);
+        return _dialogs[config];
     }
+
+    public IList<DialogConfig> GetDialogConfigs()
+    {
+        return _dialogConfigs.AsReadOnly();
+    }
+
+    private void DialogEnd(Dialog d)
+    {
+        OnDialogFinished?.Invoke();
+        d.OnDialogFinish -= DialogEnd;
+    }
+
+    //[ContextMenu("Make step")]
+    //public void Test()
+    //{
+    //    PickDialog(_dialogConfigs[0]);
+    //}
 }

@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Dialog
 {
-    public event Action OnDialogFinish;
+    public event Action<Dialog> OnDialogFinish;
     public int CurrentStep => _currentStep;
+    public int StepCount => _config.DialogSteps.Count;
 
     private DialogConfig _config;
     private DialogVisualiser _visualiser;
@@ -29,7 +30,8 @@ public class Dialog
         _currentStep = step;
         _visualiser.SetUpDialog();
 
-        _lastNarrator = _config.DialogSteps[0].Actor;
+        if(_lastNarrator == null)
+            _lastNarrator = _config.DialogSteps[0].Actor;
 
         foreach (var item in _config.DialogSteps)
         {
@@ -90,7 +92,7 @@ public class Dialog
     {
         if (_currentStep >= _config.DialogSteps.Count)
         {
-            OnDialogFinish?.Invoke();
+            OnDialogFinish?.Invoke(this);
             return;
         }
 
@@ -128,6 +130,9 @@ public class Dialog
             // set up other parametres of current actor
             _visualiser.ChangeActorAction(actorPlace, curStep.Action);
             _visualiser.ChangeMood(actorPlace, curStep.Mood);
+
+            if(curStep.Action == NarratorAction.Destroy)
+                _places.Remove(curActor);
         }
 
         // type text
