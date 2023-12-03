@@ -55,6 +55,14 @@ public class DialogVisualiser : MonoBehaviour
         }
     }
 
+    public void ForceStop()
+    {
+        IsTyping = false;
+
+        DOTween.CompleteAll(true);
+
+    }
+
     // initialize actor
     public void SetUpActor(NarratorConfig actor, NarratorPlaces narratorPlace, bool prevShow = false)
     {
@@ -63,10 +71,10 @@ public class DialogVisualiser : MonoBehaviour
 
         ChangeMood(narratorPlace, NarratorMoods.Default);
 
-        ChangeActorLight(narratorPlace, prevShow == false ?
-            NarratorColorStates.Transparent : NarratorColorStates.Shaded);
+        //ChangeActorLight(narratorPlace, prevShow == false ?
+        //    NarratorColorStates.Transparent : NarratorColorStates.Shaded);
 
-        ChangeActorAction(narratorPlace, prevShow == false ? NarratorAction.MoveOut : NarratorAction.MoveIn);
+        //ChangeActorAction(narratorPlace, prevShow == false ? NarratorAction.MoveOut : NarratorAction.MoveIn);
     }
 
     // set actor name and text
@@ -76,8 +84,8 @@ public class DialogVisualiser : MonoBehaviour
         StartCoroutine(WriteText(text));
     }
 
-    public void ForceStopWriting() =>
-        IsTyping = false;
+    //public void ForceStopWriting() =>
+    //    IsTyping = false;
 
     private IEnumerator WriteText(string text)
     {
@@ -116,7 +124,6 @@ public class DialogVisualiser : MonoBehaviour
                 break;
 
             case NarratorAction.Destroy:
-                actor.Image.rectTransform.DOAnchorPos(actor.OutOfBoundsPlace.anchoredPosition, _moveSpeed);
                 OnActorNeedToRemove?.Invoke(place);
                 break;
 

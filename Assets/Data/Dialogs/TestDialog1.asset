@@ -75,7 +75,7 @@ MonoBehaviour:
     Text: Hi
   - IsTellerStep: 0
     Actor: {fileID: 11400000, guid: 62ba8f2eb3f9bd34f84d2ecfb4281c37, type: 2}
-    Action: 1
+    Action: 0
     ColorState: 0
     Mood: 1
     Text: And this is my partner
@@ -89,7 +89,7 @@ MonoBehaviour:
     Actor: {fileID: 0}
     Action: 3
     ColorState: 0
-    Mood: 3
+    Mood: 0
     Text: 
   - IsTellerStep: 0
     Actor: {fileID: 11400000, guid: 1a6c2845c701dfe499bc53c627430fb9, type: 2}

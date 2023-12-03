@@ -100,7 +100,7 @@ public class Dialog
         // if text is not fully write yet force write it
         if (_visualiser.IsTyping)
         {
-            _visualiser.ForceStopWriting();
+            _visualiser.ForceStop();
             return;
         }
 
