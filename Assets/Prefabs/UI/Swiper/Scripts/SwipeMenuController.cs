@@ -17,7 +17,8 @@ public class SwipeMenuController : MonoBehaviour
             return GetConfigByIndex(_swipeSnapMenu.SelectedTabIndex);
         }
     }
-    //public event Action<int> OnTabSnapped;
+
+    public int ElementsCount => _items.Count;
 
     [SerializeField] private SwipeMenuType _swipeMenuType;
 
@@ -33,10 +34,7 @@ public class SwipeMenuController : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Button _nextItemButton;
     [SerializeField] private Button _previousItemButton;
-    //test
-    //[SerializeField] private Button _additemButton;
-    //[SerializeField] private TMP_Text _textSnappedIndex;
-    //[SerializeField] private TMP_Text _textSelectedIndex;
+
 
     private readonly Dictionary<int, DialogConfig> _dialogConfigs = new();
 
@@ -54,7 +52,6 @@ public class SwipeMenuController : MonoBehaviour
         }
 
         _swipeSnapMenu.OnTabSelected += TabSelected;
-        //_swipeSnapMenu.OnTabSnapped += OnTabSnapped;
 
         SubUI();
     }
@@ -105,20 +102,12 @@ public class SwipeMenuController : MonoBehaviour
         {
             SlidePrevious();
         });
-
-        //_swipeSnapMenu.OnTabSelected += GetConfigByIndex;
-        //_swipeSnapMenu.OnTabSnapped += SetSnappedValue;
-        //_additemButton.onClick.AddListener(() => AddItems());
     }
 
     public void UnSubUI()
     {
         _nextItemButton.onClick.RemoveAllListeners();
         _previousItemButton.onClick.RemoveAllListeners();
-
-        //_swipeSnapMenu.OnTabSelected -= SetSelectedValue;
-        //_swipeSnapMenu.OnTabSnapped -= SetSnappedValue;
-        //_additemButton.onClick.RemoveAllListeners();
     }
 
     private void SlideNext()
@@ -132,16 +121,6 @@ public class SwipeMenuController : MonoBehaviour
         int index = _swipeSnapMenu.SelectedTabIndex;
         _swipeSnapMenu.SelectTab(index - 1);
     }
-
-    //public void SetItemPrefabs(List<GameObject> prefabs) =>
-    //    _itemPrefabs = prefabs;
-
-    //#region Test
-    //private void SetSnappedValue(int value) =>
-    //    _textSnappedIndex.text = value.ToString();
-
-    //private void SetSelectedValue(int value) =>
-    //    _textSelectedIndex.text = value.ToString();
 
     private DialogConfig GetConfigByIndex(int value)
     {
@@ -157,19 +136,11 @@ public class SwipeMenuController : MonoBehaviour
         _items.Add(item);
 
         _swipeSnapMenu.RecalculatePositions();
+
+        item.AddComponent<AutoScaleImage>().Init(_swipeSnapMenu, _scrollRect.viewport);
+
+        _swipeSnapMenu.RecalculatePositions();
     }
-
-    //private Color GetRandomColor()
-    //{
-    //    var color = new Color();
-    //    color.r = UnityEngine.Random.Range(0f, 1f);
-    //    color.g = UnityEngine.Random.Range(0f, 1f);
-    //    color.b = UnityEngine.Random.Range(0f, 1f);
-    //    color.a = 1f;
-
-    //    return color;
-//    //}
-//#endregion
 }
 
 public enum SwipeMenuType
