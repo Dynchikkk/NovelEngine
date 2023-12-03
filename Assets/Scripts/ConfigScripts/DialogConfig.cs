@@ -6,12 +6,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DialogConfig", menuName = "Configs/Dialog Config")]
 public class DialogConfig : ScriptableObject
 {
-    public NarratorConfig Teller;
-
+    [Header("Preview")]
     public string Name = "";
     public string Author = "";
     public string Description = "";
     public Sprite Icon;
+
+    [Header("Dialog parametres")]
+    public NarratorConfig Teller;
+    public Sprite DefaultBg;
     public List<DialogStep> DialogSteps = new List<DialogStep>();
 }
 

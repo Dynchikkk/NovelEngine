@@ -59,6 +59,21 @@ public class SwipeMenuController : MonoBehaviour
     private void TabSelected(int value) =>
         OnTabSelected?.Invoke(GetConfigByIndex(value));
 
+    public void SelectTab(int num) =>
+        _swipeSnapMenu.SelectTab(num);
+
+    public void SelectTab(DialogConfig dialog)
+    {
+        for (int num = 0; num < _dialogConfigs.Count; num++)
+        {
+            if (_dialogConfigs[num] == dialog)
+            {
+                SelectTab(num);
+                return;
+            }
+        }
+    }
+
     public void MakeHorizontal()
     {
         if(_contentConteiner.TryGetComponent(out VerticalLayoutGroup toDestr))
@@ -137,7 +152,7 @@ public class SwipeMenuController : MonoBehaviour
 
         _swipeSnapMenu.RecalculatePositions();
 
-        item.AddComponent<AutoScaleImage>().Init(_swipeSnapMenu, _scrollRect.viewport);
+        item.AddComponent<AutoScaleImage>().Init(this, _scrollRect.viewport);
 
         _swipeSnapMenu.RecalculatePositions();
     }

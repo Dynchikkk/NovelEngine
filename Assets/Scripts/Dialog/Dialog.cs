@@ -29,6 +29,7 @@ public class Dialog
     {
         _currentStep = step;
         _visualiser.SetUpDialog();
+        _visualiser.SetUpBg(_config.DefaultBg);
 
         if(_lastNarrator == null)
             _lastNarrator = _config.DialogSteps[0].Actor;

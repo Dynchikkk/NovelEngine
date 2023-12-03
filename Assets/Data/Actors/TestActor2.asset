@@ -15,8 +15,8 @@ MonoBehaviour:
   NarratorName: actor2
   MoodPics:
   - Mood: 1
-    Sprite: {fileID: 21300000, guid: dcea51d6065d64246aeec467afeff684, type: 3}
+    Sprite: {fileID: 21300000, guid: d41563d14dd570a4f81be11bbd7d124f, type: 3}
   - Mood: 2
-    Sprite: {fileID: 21300000, guid: 17fa84703485d314b8d6b5216987d4b1, type: 3}
+    Sprite: {fileID: 21300000, guid: be699711df009d541a7442322731e37f, type: 3}
   - Mood: 3
-    Sprite: {fileID: 21300000, guid: c22340e383b54c44196cb7765328e79d, type: 3}
+    Sprite: {fileID: 21300000, guid: a1626026b78c2214d807d02ddea933bb, type: 3}

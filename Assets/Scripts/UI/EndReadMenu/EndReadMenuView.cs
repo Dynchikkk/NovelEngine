@@ -26,7 +26,7 @@ public class EndReadMenuView : UIView<EndReadMenuModel>
     {
         base.Init(uiModel);
         _congratText.text = 
-            $"Ñongratulations on reading the {uiModel.Config.Name} from the author {uiModel.Config.Author}";
+            $"Ñongratulations on reading the {uiModel.Config.Name} from the {uiModel.Config.Author}";
 
         _dialogIcon.sprite = uiModel.Config.Icon;
     }

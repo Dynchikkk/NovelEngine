@@ -18,6 +18,8 @@ public class MainMenuController : UIController<MainMenuView, MainMenuModel>
             _swiper.AddItems(config);
         }
 
+        _swiper.SelectTab(0);
+
         _swiper.OnTabSelected += TabSelected;
     }
 

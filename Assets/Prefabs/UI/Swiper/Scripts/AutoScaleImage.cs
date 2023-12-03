@@ -11,16 +11,16 @@ public class AutoScaleImage : MonoBehaviour
     private Vector2 _lastScreenWidth;
 
     private RectTransform _sizer;
-    SwipeSnapMenu _swipeSnapMenu;
+    private SwipeMenuController _swiper;
 
-    public void Init(SwipeSnapMenu swipeSnapMenu, RectTransform sizer)
+    public void Init(SwipeMenuController swiper, RectTransform sizer)
     {
         _lastScreenChangeCalculationTime = Time.time;
         _image = GetComponent<RectTransform>();
         _lastScreenWidth = new Vector2(Screen.width, Screen.height);
 
         _sizer = sizer;
-        _swipeSnapMenu = swipeSnapMenu;
+        _swiper = swiper;
 
         _image.sizeDelta = new Vector2(sizer.rect.width , sizer.rect.height);
     }
@@ -36,7 +36,7 @@ public class AutoScaleImage : MonoBehaviour
         _lastScreenChangeCalculationTime = Time.time;
 
         _image.sizeDelta = new Vector2(_sizer.rect.width, _sizer.rect.height);
-        _swipeSnapMenu.SelectTab(_swipeSnapMenu.SelectedTabIndex);
+        _swiper.SelectTab(_swiper.SelectedTab);
 
         _lastScreenWidth = new Vector2(Screen.width, Screen.height);
 

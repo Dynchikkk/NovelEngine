@@ -12,57 +12,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d97b0b883c5e294bbea4ff6823a7196, type: 3}
   m_Name: TestDialog1
   m_EditorClassIdentifier: 
+  Name: Performance
+  Author: Developer
+  Description: Showing the capabilities of the engine
+  Icon: {fileID: 21300000, guid: 441ce1a2feb8d9c48924a1025fe0a880, type: 3}
   Teller: {fileID: 11400000, guid: 747b8dde398c38f48bfa2ab8d00a9408, type: 2}
-  Name: TestDialog1
-  Author: author 1
-  Description: cool story 1
-  Icon: {fileID: 21300000, guid: 0da63bf69e254aa4a83c345c3de497c8, type: 3}
+  DefaultBg: {fileID: 21300000, guid: 8ea0694ab1ae21542bb23171183ed33f, type: 3}
   DialogSteps:
+  - IsTellerStep: 1
+    Actor: {fileID: 0}
+    Action: 0
+    ColorState: 0
+    Mood: 0
+    Text: Hello from teller. This is a test dialog
+  - IsTellerStep: 1
+    Actor: {fileID: 0}
+    Action: 0
+    ColorState: 0
+    Mood: 0
+    Text: Now you will see how the first actor comes out
   - IsTellerStep: 0
     Actor: {fileID: 11400000, guid: 62ba8f2eb3f9bd34f84d2ecfb4281c37, type: 2}
     Action: 1
     ColorState: 0
     Mood: 0
     Text: 
-  - IsTellerStep: 1
-    Actor: {fileID: 0}
-    Action: 0
-    ColorState: 0
-    Mood: 0
-    Text: Teller textaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   - IsTellerStep: 0
     Actor: {fileID: 11400000, guid: 62ba8f2eb3f9bd34f84d2ecfb4281c37, type: 2}
     Action: 1
-    ColorState: 2
+    ColorState: 0
     Mood: 1
     Text: Hello
   - IsTellerStep: 0
     Actor: {fileID: 0}
-    Action: 3
-    ColorState: 0
+    Action: 0
+    ColorState: 2
     Mood: 1
-    Text: Bye
+    Text: I can be transparent
   - IsTellerStep: 0
-    Actor: {fileID: 11400000, guid: 1a6c2845c701dfe499bc53c627430fb9, type: 2}
-    Action: 1
-    ColorState: 0
-    Mood: 3
-    Text: Hi
-  - IsTellerStep: 0
-    Actor: {fileID: 11400000, guid: eaea73a019a585c449829df515597715, type: 2}
-    Action: 1
-    ColorState: 0
-    Mood: 1
-    Text: Fine and you
-  - IsTellerStep: 0
-    Actor: {fileID: 11400000, guid: eaea73a019a585c449829df515597715, type: 2}
+    Actor: {fileID: 0}
     Action: 0
     ColorState: 0
-    Mood: 3
-    Text: a little sick
+    Mood: 2
+    Text: And can change mood
+  - IsTellerStep: 0
+    Actor: {fileID: 0}
+    Action: 2
+    ColorState: 0
+    Mood: 1
+    Text: Can go away
+  - IsTellerStep: 0
+    Actor: {fileID: 0}
+    Action: 1
+    ColorState: 0
+    Mood: 1
+    Text: And come back
+  - IsTellerStep: 0
+    Actor: {fileID: 11400000, guid: eaea73a019a585c449829df515597715, type: 2}
+    Action: 1
+    ColorState: 0
+    Mood: 1
+    Text: Hi
+  - IsTellerStep: 0
+    Actor: {fileID: 11400000, guid: 62ba8f2eb3f9bd34f84d2ecfb4281c37, type: 2}
+    Action: 1
+    ColorState: 0
+    Mood: 1
+    Text: And this is my partner
   - IsTellerStep: 0
     Actor: {fileID: 0}
     Action: 2
     ColorState: 0
     Mood: 3
-    Text: See you
+    Text: I have to go, but you won't get bored.
+  - IsTellerStep: 0
+    Actor: {fileID: 0}
+    Action: 3
+    ColorState: 0
+    Mood: 3
+    Text: 
+  - IsTellerStep: 0
+    Actor: {fileID: 11400000, guid: 1a6c2845c701dfe499bc53c627430fb9, type: 2}
+    Action: 1
+    ColorState: 0
+    Mood: 1
+    Text: Hi, I've replaced the previous actor.
+  - IsTellerStep: 1
+    Actor: {fileID: 0}
+    Action: 1
+    ColorState: 0
+    Mood: 1
+    Text: I hope you like it. Enjoy!!!

@@ -13,6 +13,7 @@ public class DialogVisualiser : MonoBehaviour
 
     [SerializeField] private TMP_Text _textPlace;
     [SerializeField] private TMP_Text _nameText;
+    [SerializeField] private Image _bg;
     [SerializeField, Range(0, 1)] private float _textWriteCD = 0.5f;
 
     [Header("Step action pararms")]
@@ -42,6 +43,9 @@ public class DialogVisualiser : MonoBehaviour
 
         //_leftPlace.OutOfBoundsPlace = 
     }
+
+    public void SetUpBg(Sprite img) =>
+        _bg.sprite = img;
     
     public void ChangeVisualiserCondition(bool condition)
     {

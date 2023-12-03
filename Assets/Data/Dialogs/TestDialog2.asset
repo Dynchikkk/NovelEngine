@@ -12,57 +12,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d97b0b883c5e294bbea4ff6823a7196, type: 3}
   m_Name: TestDialog2
   m_EditorClassIdentifier: 
-  Teller: {fileID: 11400000, guid: 747b8dde398c38f48bfa2ab8d00a9408, type: 2}
   Name: TestDialog2
-  Author: author 2
+  Author: Developer
   Description: cool story 2
-  Icon: {fileID: 21300000, guid: 374643871a39dd44880f1c0eff14f46c, type: 3}
+  Icon: {fileID: 21300000, guid: c5bdff19de7b222458a6bbb0fdcf5d52, type: 3}
+  Teller: {fileID: 11400000, guid: 747b8dde398c38f48bfa2ab8d00a9408, type: 2}
+  DefaultBg: {fileID: 21300000, guid: 2d2f724935279c9488a27e5eebe23055, type: 3}
   DialogSteps:
-  - IsTellerStep: 0
-    Actor: {fileID: 11400000, guid: 62ba8f2eb3f9bd34f84d2ecfb4281c37, type: 2}
-    Action: 1
-    ColorState: 0
-    Mood: 0
-    Text: 
   - IsTellerStep: 1
     Actor: {fileID: 0}
-    Action: 0
+    Action: 1
     ColorState: 0
     Mood: 0
-    Text: Teller textaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  - IsTellerStep: 0
-    Actor: {fileID: 11400000, guid: 62ba8f2eb3f9bd34f84d2ecfb4281c37, type: 2}
-    Action: 1
-    ColorState: 2
-    Mood: 1
-    Text: Hello
-  - IsTellerStep: 0
+    Text: Hello again
+  - IsTellerStep: 1
     Actor: {fileID: 0}
-    Action: 3
+    Action: 1
     ColorState: 0
-    Mood: 1
-    Text: Bye
+    Mood: 0
+    Text: 'If the question arises in your head: "why again?" Then you obviously haven''t
+      read the first dialogue .'
   - IsTellerStep: 0
     Actor: {fileID: 11400000, guid: 1a6c2845c701dfe499bc53c627430fb9, type: 2}
     Action: 1
     ColorState: 0
-    Mood: 3
-    Text: Hi
+    Mood: 0
+    Text: In this dialogue, I am the main one
+  - IsTellerStep: 1
+    Actor: {fileID: 11400000, guid: 1a6c2845c701dfe499bc53c627430fb9, type: 2}
+    Action: 0
+    ColorState: 0
+    Mood: 2
+    Text: This dialogue will be short because the developer has not mastered it anymore
   - IsTellerStep: 0
-    Actor: {fileID: 11400000, guid: eaea73a019a585c449829df515597715, type: 2}
+    Actor: {fileID: 11400000, guid: 1a6c2845c701dfe499bc53c627430fb9, type: 2}
+    Action: 0
+    ColorState: 0
+    Mood: 2
+    Text: Well, go to hell!
+  - IsTellerStep: 0
+    Actor: {fileID: 11400000, guid: 62ba8f2eb3f9bd34f84d2ecfb4281c37, type: 2}
     Action: 1
     ColorState: 0
     Mood: 1
-    Text: Fine and you
+    Text: Hi, and you're already leaving, well, bye then
   - IsTellerStep: 0
-    Actor: {fileID: 11400000, guid: eaea73a019a585c449829df515597715, type: 2}
-    Action: 0
-    ColorState: 0
-    Mood: 3
-    Text: a little sick
-  - IsTellerStep: 0
-    Actor: {fileID: 0}
+    Actor: {fileID: 11400000, guid: 62ba8f2eb3f9bd34f84d2ecfb4281c37, type: 2}
     Action: 2
     ColorState: 0
     Mood: 3
-    Text: See you
+    Text: Bye
+  - IsTellerStep: 0
+    Actor: {fileID: 11400000, guid: 1a6c2845c701dfe499bc53c627430fb9, type: 2}
+    Action: 2
+    ColorState: 0
+    Mood: 3
+    Text: Bye
