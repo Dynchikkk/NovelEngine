@@ -20,6 +20,7 @@ public class DialogVisualiser : MonoBehaviour
     [SerializeField, Range(0, 255)] private int _shadeForce = 150;
     [SerializeField] private float _shadeSpeed = 2f;
     [SerializeField] private float _moveSpeed = 2f;
+    [SerializeField] private float _changeMoodSpeed = 1f;
 
     [Header("PLaces")]
     [SerializeField] private PlacePararms _leftPlace;
@@ -37,16 +38,22 @@ public class DialogVisualiser : MonoBehaviour
     // initialize dialog
     public void SetUpDialog()
     {
+        ResetDialog();
         ChangeVisualiserCondition(true);
-        //_leftPlace.DefaultPlace = _leftPlace.Image.rectTransform.anchoredPosition;
-        //_rightPlace.DefaultPlace = _rightPlace.Image.rectTransform.anchoredPosition;
+    }
 
-        //_leftPlace.OutOfBoundsPlace = 
+    private void ResetDialog()
+    {
+        _leftPlace.Image.rectTransform.anchoredPosition = _leftPlace.OutOfBoundsPlace.anchoredPosition;
+        _rightPlace.Image.rectTransform.anchoredPosition = _rightPlace.OutOfBoundsPlace.anchoredPosition;
+
+        _textPlace.text = "";
+        _nameText.text = "";
     }
 
     public void SetUpBg(Sprite img) =>
         _bg.sprite = img;
-    
+
     public void ChangeVisualiserCondition(bool condition)
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -60,7 +67,6 @@ public class DialogVisualiser : MonoBehaviour
         IsTyping = false;
 
         DOTween.CompleteAll(true);
-
     }
 
     // initialize actor
@@ -70,11 +76,6 @@ public class DialogVisualiser : MonoBehaviour
         tmp.moodPics = actor.MoodPics;
 
         ChangeMood(narratorPlace, NarratorMoods.Default);
-
-        //ChangeActorLight(narratorPlace, prevShow == false ?
-        //    NarratorColorStates.Transparent : NarratorColorStates.Shaded);
-
-        //ChangeActorAction(narratorPlace, prevShow == false ? NarratorAction.MoveOut : NarratorAction.MoveIn);
     }
 
     // set actor name and text
@@ -83,9 +84,6 @@ public class DialogVisualiser : MonoBehaviour
         _nameText.text = name;
         StartCoroutine(WriteText(text));
     }
-
-    //public void ForceStopWriting() =>
-    //    IsTyping = false;
 
     private IEnumerator WriteText(string text)
     {
